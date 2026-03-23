@@ -1,46 +1,32 @@
-// analytics.js
-// Comprehensive User Interaction Tracking and Analytics System for EduForge ML Model Training
-
 class Analytics {
     constructor() {
-        this.interactions = [];
+        this.events = [];
     }
 
-    trackEvent(event) {
-        const timestamp = new Date().toISOString();
-        this.interactions.push({ event, timestamp });
-        console.log(`Event tracked: ${event} at ${timestamp}`);
+    lesson_started() {
+        this.events.push({event: 'lesson_started', timestamp: new Date()});
     }
 
-    getInteractions() {
-        return this.interactions;
+    exam_submitted() {
+        this.events.push({event: 'exam_submitted', timestamp: new Date()});
     }
 
-    sendAnalyticsData() {
-        // Assuming there's an API endpoint to send data to
-        const data = JSON.stringify(this.getInteractions());
+    practice_question_answered() {
+        this.events.push({event: 'practice_question_answered', timestamp: new Date()});
+    }
 
-        fetch('<API_ENDPOINT>', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: data
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Analytics data sent successfully:', data);
-        })
-        .catch((error) => {
-            console.error('Error sending analytics data:', error);
-        });
+    exportData() {
+        return this.events;
     }
 }
 
-// Usage example:
+// Example usage:
 const analytics = new Analytics();
-analytics.trackEvent('User logged in');
-// Add other tracking events as needed
 
-// To send the collected data:
-// analytics.sendAnalyticsData();
+// Call these methods on the respective events
+// analytics.lesson_started();
+// analytics.exam_submitted();
+// analytics.practice_question_answered();
+
+// Export for ML model training
+// const trainingData = analytics.exportData();
